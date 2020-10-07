@@ -1,6 +1,5 @@
 import React from 'react';
 import ChooseService from './ChooseService';
-import PickDateAndTime from './PickDateAndTime';
 import ConfirmationPage from './ConfirmationPage';
 
 

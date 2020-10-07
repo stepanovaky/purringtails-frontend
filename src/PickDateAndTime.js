@@ -2,28 +2,26 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { addDays, format } from 'date-fns';
+import differenceInDays from 'date-fns/differenceInDays';
+
 
 function PickDateAndTime(props) {
-
-    const [startDate, setStartDate] = useState(new Date());
-
-    const tomorrow = new Date();
-
-    const [endDate, setEndDate] = useState(tomorrow.setDate(tomorrow.getDate() +1));
-    const [daysOfService, setDaysOfService ] = useState();
-
-    const changeBothStartAndEndDate = (date) => {
-        setStartDate(date);
-        setEndDate(date.setDate(date.getDate() + 1))
-    }
+    
+    const [startDate, setStartDate] = useState(addDays(new Date(), 1));
+    
 
     
 
-    const dateRangeInMilliseconds = (new Date(endDate).getTime()) - (new Date(startDate).getTime());
-    const dateRangeInDays = Math.floor(dateRangeInMilliseconds / (24*60*60*1000));
+    const [endDate, setEndDate] = useState(addDays(new Date(), 2));
+    const [daysOfService, setDaysOfService ] = useState();
+
+    
+
+   
+    const dateRangeInDays = differenceInDays(endDate, startDate);
     console.log(dateRangeInDays)
     const displayingDaysOfService = (dateRange) => {
-        if (dateRange === 0) {
+        if (dateRange <= 0) {
             setDaysOfService(1)
         } else if (dateRange === 1) {
             setDaysOfService(1)
@@ -34,14 +32,14 @@ function PickDateAndTime(props) {
 
     useEffect(() => {
         displayingDaysOfService(dateRangeInDays)
-        endDateChangesWhenStartDateChanges()
-    }, [startDate])
+        
+    }, [dateRangeInDays])
 
-    const endDateChangesWhenStartDateChanges = () => {
-        setEndDate(startDate.setDate(startDate.getDate() + 1))
+    const modifiedEndDate = (date) => {
+        setStartDate(date)
+        setEndDate(addDays(date, 1))
     }
-
-
+    
    
     
 
@@ -64,7 +62,7 @@ function PickDateAndTime(props) {
                 minDate={new Date()}
                 maxDate={addDays(new Date(), 100)}
         selected={startDate}
-        onChange={date => setStartDate(date)}
+        onChange={date => modifiedEndDate(date)}
         selectsStart
         showTimeSelect
         timeFormat="HH:mm"
