@@ -7,12 +7,12 @@ import differenceInDays from 'date-fns/differenceInDays';
 
 function PickDateAndTime(props) {
     
-    const [startDate, setStartDate] = useState(addDays(new Date(), 1));
+    const [startDate, setStartDate] = useState(null);
     
 
     
 
-    const [endDate, setEndDate] = useState(addDays(new Date(), 2));
+    const [endDate, setEndDate] = useState(null);
     const [daysOfService, setDaysOfService ] = useState();
 
     
@@ -39,6 +39,8 @@ function PickDateAndTime(props) {
         setStartDate(date)
         setEndDate(addDays(date, 1))
     }
+
+    
     
    
     
@@ -51,6 +53,7 @@ function PickDateAndTime(props) {
                         selected={startDate} 
                         onChange={date => setStartDate(date)}
                         showTimeSelect
+                        placeholderText="Start"
                         timeFormat="HH:mm"
                         timeIntervals={30}
                         timeCaption="Time"
@@ -65,6 +68,7 @@ function PickDateAndTime(props) {
         onChange={date => modifiedEndDate(date)}
         selectsStart
         showTimeSelect
+        placeholderText="Start"
         timeFormat="HH:mm"
         timeIntervals={30}
         timeCaption="Time"
@@ -79,6 +83,7 @@ function PickDateAndTime(props) {
         onChange={date => setEndDate(date)}
         selectsEnd
         showTimeSelect
+        placeholderText="End"
         timeFormat="HH:mm"
         timeIntervals={30}
         timeCaption="Time"
@@ -96,7 +101,7 @@ function PickDateAndTime(props) {
         <div className="date-and-time">
             <h2>Pick Date and Time</h2>
             {serviceAppropriateCalendar()}
-            <p>You chose {props.service} on {format(startDate, 'MM/dd')}{(props.service === 'Boarding' || props.service === 'Sitting') ? ` until ${format(endDate, 'MM/dd')}`:null}{(props.service === 'Boarding' || props.service === 'Sitting') ? ` for ${daysOfService}`:null} {((props.service === 'Boarding' && daysOfService === 1) || (props.service === 'Sitting' && daysOfService === 1)) ? `day`:null}{(daysOfService >= 2) ? `days`:null} </p>
+            <p>You chose {props.service} on {(startDate !== null) ? format(startDate, 'MM/dd'):null}{(endDate !== null) ? ((props.service === 'Boarding' || props.service === 'Sitting') ? ` until ${format(endDate, 'MM/dd')}`:null):null}{(endDate !== null) ? ((props.service === 'Boarding' || props.service === 'Sitting') ? ` for ${daysOfService}`:null): null} {((props.service === 'Boarding' && daysOfService === 1) || (props.service === 'Sitting' && daysOfService === 1)) ? `day`:null}{(daysOfService >= 2) ? `days`:null} </p>
 
         </div>
     )

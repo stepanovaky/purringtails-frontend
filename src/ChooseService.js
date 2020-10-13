@@ -1,5 +1,6 @@
 import React, {  useState } from 'react';
 import PickDateAndTime from './PickDateAndTime';
+import FrequencyOfService from './FrequencyOfService';
 
 function ChooseService() {
     const [ selectedOption, setSelectedOption ] = useState('Walk');
@@ -61,6 +62,7 @@ function ChooseService() {
                     </label>
                 </div>
             </form>
+            {((selectedOption === 'Walk' )||(selectedOption === 'Drop In')) ?  <FrequencyOfService />:null }
             <PickDateAndTime service={selectedOption} />
         </div>
     )
