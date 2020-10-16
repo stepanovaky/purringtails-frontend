@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import { shallow } from 'enzyme';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { shallow } from "enzyme";
 
-it('renders without crashing', () => {
+it("renders without crashing", () => {
   shallow(<App />);
 });
