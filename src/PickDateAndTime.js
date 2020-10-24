@@ -78,7 +78,7 @@ function PickDateAndTime(props) {
             timeCaption="Time"
             startDate={startDate}
             endDate={endDate}
-            minDate={startDate}
+            // minDate={startDate}
             dateFormat="MMMM d, yyyy h:mm aa"
           />
         </div>

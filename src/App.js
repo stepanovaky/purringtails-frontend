@@ -1,26 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Main from "./Main";
-import { Route, Redirect } from "react-router-dom";
-import Login from "./LoginRegister/login";
-import Register from "./LoginRegister/register";
+import { Route, useHistory } from "react-router-dom";
+import GoogleLogin, { GoogleLogout } from "react-google-login";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [response, setResponse] = useState();
+  const history = useHistory();
+  const redirectOnLogin = (response) => {
+    history.push("/homepage");
+    setResponse(response);
+  };
+
+  useEffect(() => {});
+
   return (
     <div className="App">
-      <Route path="/homepage" component={Main}>
-        {loggedIn === false ? <Redirect to="/login" /> : <Main />}
-      </Route>
       <Route
-        path="/login"
-        render={(props) => (
-          <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-        )}
-      ></Route>
-      <Route path="/register" component={Register}>
-        {loggedIn ? <Redirect to="/homepage" /> : <Register />}
-      </Route>
+        path="/homepage"
+        render={(props) => <Main {...props} response={response} />}
+      />
+      <GoogleLogin
+        clientId="1031900326041-m3tpi4kjudu1f5uqj3jjp0pufpqs0ah8.apps.googleusercontent.com"
+        onSuccess={redirectOnLogin}
+        onFailure={(error) => console.log(error)}
+        redirectUri="http://localhost:3000/homepage"
+        isSignedIn={true}
+      />
+      <GoogleLogout
+        clientId="1031900326041-m3tpi4kjudu1f5uqj3jjp0pufpqs0ah8.apps.googleusercontent.com"
+        buttonText="Logout"
+        onLogoutSuccess={() => history.push("login")}
+      />
     </div>
+    //accessToken vs tokenId
   );
 }
 

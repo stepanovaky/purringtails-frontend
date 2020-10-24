@@ -15,9 +15,11 @@
     "react-datepicker": "^3.2.2",
     "react-dom": "^16.13.1",
     "react-flash-message": "^1.0.4",
+    "react-google-login": "^5.1.22",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "react-test-renderer": "^16.13.1"
+    "react-test-renderer": "^16.13.1",
+    "proxy": "http://localhost:3000/"
   },
   "scripts": {
     "start": "react-scripts start",
