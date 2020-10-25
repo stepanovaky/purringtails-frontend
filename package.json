@@ -9,8 +9,10 @@
     "date-fns": "^2.16.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
+    "http-proxy-middleware": "^1.0.6",
     "libphonenumber-js": "^1.8.3",
     "prettier": "^2.1.2",
+    "proxy": "http://localhost:3000/",
     "react": "^16.13.1",
     "react-datepicker": "^3.2.2",
     "react-dom": "^16.13.1",
@@ -18,8 +20,7 @@
     "react-google-login": "^5.1.22",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "react-test-renderer": "^16.13.1",
-    "proxy": "http://localhost:3000/"
+    "react-test-renderer": "^16.13.1"
   },
   "scripts": {
     "start": "react-scripts start",
