@@ -8,8 +8,6 @@ function ChooseService() {
     setSelectedOption(value);
   };
 
-  console.log(selectedOption);
-
   return (
     <div className="choose-service">
       <h2>What Service are you interested in?</h2>
