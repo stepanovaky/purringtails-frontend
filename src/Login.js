@@ -2,14 +2,29 @@ import React, { useState } from "react";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Flash from "./FlashMessage";
 
 function Login() {
   const history = useHistory();
+  const [showMessage, setShowMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
   const [fetchResponse, setFetchResponse] = useState();
+
   const redirectOnLogin = (response) => {
     authenticateLoginGoogle();
     setFetchResponse(response);
-    console.log(response);
+  };
+
+  const redirect = (response) => {
+    if (response.status === 200) {
+      const responseJSON = response.json();
+      history.push("/homepage", { responseJSON });
+    } else if (response.status === 400) {
+      const error = response.json();
+      console.log(error);
+      setShowMessage(true);
+      setErrorMessage(error.error);
+    }
   };
 
   const authenticateLoginGoogle = async () => {
@@ -21,25 +36,28 @@ function Login() {
           Authorization: `${fetchResponse.tokenId}`,
         },
       });
-      if (fetchAuthResponse.status === 200) {
-        history.push("/homepage", { fetchResponse });
-      } else {
-        history.push("/login");
-      }
-    } catch (err) {
-      console.log(err);
-    }
+
+      redirect(fetchAuthResponse);
+    } catch {}
   };
 
-  const handleEmailSubmit = (event) => {
+  const handleEmailSubmit = async (event) => {
     event.preventDefault();
     const loginEmail = event.target["login_email"].value;
     const loginPassword = event.target["login_password"].value;
     const authToken = window.btoa(`${loginEmail}:${loginPassword}`);
-    console.log(authToken);
-
-    //send authtoken to server, turn that into jwt, return jwt to client,
-    //then make sure all other requests have jwt attached
+    const fetchUser = await fetch(
+      "http://localhost:8000/api/user/email/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/ json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+    const response = await fetchUser;
+    redirect(fetchUser);
   };
 
   return (
@@ -77,6 +95,11 @@ function Login() {
             id="login_password"
           />
         </label>
+        {showMessage && (
+          <div>
+            <Flash message={errorMessage} />
+          </div>
+        )}
         <label htmlFor="submit_label_login">
           <input
             type="submit"

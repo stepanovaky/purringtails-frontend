@@ -29,9 +29,14 @@ function Registration() {
         body: JSON.stringify(newUser),
       });
       const response = await fetchUser;
-      console.log(response);
+
       if (response.status === 201) {
         history.push("/login");
+      } else if (response.status === 400) {
+        const error = await response.json();
+        console.log(error);
+        setShowMessage(true);
+        setErrorMessage(error.error);
       }
     }
   };

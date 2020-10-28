@@ -29,7 +29,7 @@ function PickDateAndTime(props) {
   const isThereADate = (date) => (date == null ? null : formatDate(date));
 
   const tomorrow = addDays(new Date(), 1);
-  const isItTomorrow = (providedDate) => tomorrow == providedDate;
+  const isItTomorrow = (providedDate) => tomorrow === providedDate;
 
   console.log(isItTomorrow(tomorrow));
 
@@ -41,7 +41,7 @@ function PickDateAndTime(props) {
     serviceMin,
     serviceHour
   ) =>
-    isThereADate(selectedDate) == formatDate(serviceDate)
+    isThereADate(selectedDate) === formatDate(serviceDate)
       ? excludeTime(serviceMin, serviceHour)
       : null;
   console.log(
