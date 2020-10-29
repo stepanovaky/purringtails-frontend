@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Flash from "./FlashMessage";
 import { useHistory } from "react-router-dom";
+import ErrorBoundary from "./ErrorBoundary";
 
 function Registration() {
   const history = useHistory();
@@ -21,22 +22,26 @@ function Registration() {
       setShowMessage(true);
       setErrorMessage("Passwords do not match");
     } else {
-      const fetchUser = await fetch("http://localhost:8000/api/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newUser),
-      });
-      const response = await fetchUser;
+      try {
+        const fetchUser = await fetch("http://localhost:8000/api/user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newUser),
+        });
+        const response = await fetchUser;
 
-      if (response.status === 201) {
-        history.push("/login");
-      } else if (response.status === 400) {
-        const error = await response.json();
-        console.log(error);
-        setShowMessage(true);
-        setErrorMessage(error.error);
+        if (response.status === 201) {
+          history.push("/login");
+        } else if (response.status === 400) {
+          const error = await response.json();
+          console.log(error);
+          setShowMessage(true);
+          setErrorMessage(error.error);
+        }
+      } catch (err) {
+        console.log(err);
       }
     }
   };
@@ -73,11 +78,13 @@ function Registration() {
             required
           />
         </label>
-        {showMessage && (
-          <div>
-            <Flash message={errorMessage} />
-          </div>
-        )}
+        <ErrorBoundary>
+          {showMessage && (
+            <div>
+              <Flash message={errorMessage} />
+            </div>
+          )}
+        </ErrorBoundary>
         <label htmlFor="submit_registration">
           <input
             type="submit"

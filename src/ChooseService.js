@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import PickDateAndTime from "./PickDateAndTime";
+import ErrorBoundary from "./ErrorBoundary";
 
-function ChooseService() {
+function ChooseService(props) {
   const [selectedOption, setSelectedOption] = useState("Walk");
 
   const handleOption = (value) => {
@@ -57,8 +58,13 @@ function ChooseService() {
           </label>
         </div>
       </form>
-
-      <PickDateAndTime service={selectedOption} />
+      <ErrorBoundary>
+        <PickDateAndTime
+          userName={props.userName}
+          userId={props.userId}
+          service={selectedOption}
+        />
+      </ErrorBoundary>
     </div>
   );
 }

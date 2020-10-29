@@ -1,21 +1,22 @@
 import React, { useEffect } from "react";
 import ChooseService from "./ChooseService";
+import ErrorBoundary from "./ErrorBoundary";
 import NavBar from "./NavBar";
 import ScheduledServices from "./ScheduledServices";
 
 function Main(props) {
-  const userGivenName = props.location.state.fetchResponse.profileObj.givenName;
-  const userEmail = props.location.state.fetchResponse.profileObj.email;
-  //useremail stored ... in context? so that confirmation email can be sent later
-  //in context, confirmation nested through chooseservice
-  useEffect(() => {
-    props.handleUser(userGivenName);
-  });
+  const userGivenName = props.location.state.fetchResponse.name;
+  const userId = props.location.state.fetchResponse.id;
+
+  console.log(props);
+
   return (
     <div className="App">
-      <NavBar user={userGivenName} />
-      <ScheduledServices />
-      <ChooseService />
+      <ErrorBoundary>
+        <NavBar user={userGivenName} />
+        <ScheduledServices userId={userId} />
+        <ChooseService userName={userGivenName} userId={userId} />
+      </ErrorBoundary>
     </div>
   );
 }

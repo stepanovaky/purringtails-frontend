@@ -1,15 +1,45 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { addDays, format, setHours, setMinutes } from "date-fns";
+import {
+  getYear,
+  addDays,
+  format,
+  setHours,
+  setMinutes,
+  getHours,
+  getMinutes,
+  getMonth,
+  getDate,
+} from "date-fns";
 import differenceInDays from "date-fns/differenceInDays";
-import ConfirmationPage from "./ConfirmationPage";
+import { useHistory } from "react-router-dom";
+import ErrorBoundary from "./ErrorBoundary";
 
 function PickDateAndTime(props) {
-  const [startDate, setStartDate] = useState(null);
+  const tomorrow = addDays(new Date(), 1);
+
+  const history = useHistory();
+  const [startDate, setStartDate] = useState(
+    setHours(setMinutes(tomorrow, 0), 10)
+  );
+
+  console.log(startDate);
 
   const [endDate, setEndDate] = useState(null);
   const [daysOfService, setDaysOfService] = useState();
+  const [scheduled, setScheduled] = useState([]);
+
+  const destructuredDates = scheduled.map((schedule) => [
+    getYear(new Date(schedule.scheduled_date)),
+    getMonth(new Date(schedule.scheduled_date)),
+    getDate(new Date(schedule.scheduled_date)),
+    getHours(new Date(schedule.scheduled_date)),
+    getMinutes(new Date(schedule.scheduled_date)),
+  ]);
+
+  const excludeTime = (min, hour) =>
+    setHours(setMinutes(new Date(), min), hour);
 
   const dateRangeInDays = differenceInDays(endDate, startDate);
   const displayingDaysOfService = (dateRange) => {
@@ -22,40 +52,9 @@ function PickDateAndTime(props) {
     }
   };
 
-  const formatDate = (date, min = 0, hour = 0) =>
-    format(setHours(setMinutes(date, min), hour), "MMMM d, yyyy h:mm aa");
-  const excludeTime = (min, hour) =>
-    setHours(setMinutes(new Date(), min), hour);
-  const isThereADate = (date) => (date == null ? null : formatDate(date));
-
-  const tomorrow = addDays(new Date(), 1);
-  const isItTomorrow = (providedDate) => tomorrow === providedDate;
-
-  console.log(isItTomorrow(tomorrow));
-
-  const matchStartDateToExcludeDates =
-    formatDate(tomorrow) != null ? excludeTime(30, 18) : null;
-  const matchSelectedDateToExcludeDates = (
-    selectedDate,
-    serviceDate,
-    serviceMin,
-    serviceHour
-  ) =>
-    isThereADate(selectedDate) === formatDate(serviceDate)
-      ? excludeTime(serviceMin, serviceHour)
-      : null;
-  console.log(
-    matchSelectedDateToExcludeDates(startDate, new Date(2020, 9, 27), 30, 20)
-  );
-
-  const arrayOfExclusion = [
-    matchStartDateToExcludeDates,
-    matchSelectedDateToExcludeDates(startDate, new Date(2020, 9, 27), 30, 20),
-  ];
-  console.log(arrayOfExclusion);
-
   useEffect(() => {
     displayingDaysOfService(dateRangeInDays);
+    fetchScheduledDates();
   }, [dateRangeInDays, startDate]);
 
   const modifiedEndDate = (date) => {
@@ -63,64 +62,108 @@ function PickDateAndTime(props) {
     setEndDate(addDays(date, 1));
   };
 
-  //psuedo-code:
-  //for each date {
-  // iterate through the dates to check if they're tomorrow, if tomorrow, push matchstartdatetoexclude dates to arrayofexclusion
-  //} else if {
-  // all other dates push matchselecteddatetoexcludedates to arrayofexclusion
-  //}
-  //make sure arrayofexclusion is able to be a list of all excluded datetimes
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const scheduledInfo = {
+      userName: props.userName,
+      userId: props.userId,
+      service: props.service,
+      startDate: startDate,
+      endDate: endDate,
+      daysOfService: daysOfService,
+    };
+    history.push("/confirmation", { scheduledInfo });
+  };
+
+  const fetchScheduledDates = async () => {
+    const authToken = sessionStorage.getItem("authToken");
+
+    try {
+      const fetchInfo = await fetch("http://localhost:8000/api/schedule", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+          user: `${props.userId}`,
+        },
+      });
+      console.log(fetchInfo);
+      const scheduleInfo = await fetchInfo.json();
+      console.log(scheduleInfo);
+      setScheduled(scheduleInfo);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const notAvailable = [];
+
+  const unavailableTimeSlots = destructuredDates.map((day) => {
+    if (getYear(startDate) === day[0]) {
+      if (getMonth(startDate) === day[1]) {
+        if (getDate(startDate) === day[2]) {
+          notAvailable.push(excludeTime(day[4], day[3]));
+        }
+      }
+    }
+  });
 
   const serviceAppropriateCalendar = () => {
     if (props.service === "Walk" || props.service === "Drop In") {
       return (
-        <DatePicker
-          minDate={tomorrow}
-          maxDate={addDays(new Date(), 100)}
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          showTimeSelect
-          excludeTimes={arrayOfExclusion}
-          placeholderText="Start"
-          timeFormat="h:mm"
-          timeIntervals={30}
-          timeCaption="Time"
-          dateFormat="MMMM d, yyyy h:mm aa"
-        />
-      );
-    } else if (props.service === "Boarding" || props.service === "Sitting") {
-      return (
-        <div className="date-range">
+        <ErrorBoundary>
           <DatePicker
             minDate={tomorrow}
             maxDate={addDays(new Date(), 100)}
             selected={startDate}
-            onChange={(date) => modifiedEndDate(date)}
-            selectsStart
+            onChange={(date) => setStartDate(date)}
             showTimeSelect
+            excludeTimes={notAvailable}
             placeholderText="Start"
             timeFormat="h:mm"
             timeIntervals={30}
             timeCaption="Time"
-            startDate={startDate}
-            endDate={endDate}
             dateFormat="MMMM d, yyyy h:mm aa"
           />
+        </ErrorBoundary>
+      );
+    } else if (props.service === "Boarding" || props.service === "Sitting") {
+      return (
+        <div className="date-range">
+          <ErrorBoundary>
+            <DatePicker
+              minDate={tomorrow}
+              maxDate={addDays(new Date(), 100)}
+              selected={startDate}
+              onChange={(date) => modifiedEndDate(date)}
+              selectsStart
+              showTimeSelect
+              placeholderText="Start"
+              timeFormat="h:mm"
+              timeIntervals={30}
+              timeCaption="Time"
+              startDate={startDate}
+              endDate={endDate}
+              dateFormat="MMMM d, yyyy h:mm aa"
+            />
+          </ErrorBoundary>
           <br />
-          <DatePicker
-            minDate={tomorrow}
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            selectsEnd
-            showTimeSelect
-            placeholderText="End"
-            timeFormat="h:mm"
-            timeIntervals={30}
-            timeCaption="Time"
-            startDate={startDate}
-            endDate={endDate}
-            dateFormat="MMMM d, yyyy h:mm aa"
-          />
+          <ErrorBoundary>
+            <DatePicker
+              minDate={tomorrow}
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              selectsEnd
+              showTimeSelect
+              placeholderText="End"
+              timeFormat="h:mm"
+              timeIntervals={30}
+              timeCaption="Time"
+              startDate={startDate}
+              endDate={endDate}
+              dateFormat="MMMM d, yyyy h:mm aa"
+            />
+          </ErrorBoundary>
         </div>
       );
     }
@@ -156,12 +199,18 @@ function PickDateAndTime(props) {
           : null}
         {daysOfService >= 2 ? `days` : null}{" "}
       </p>
-      <ConfirmationPage
-        service={props.service}
-        startDate={startDate}
-        endDate={endDate}
-        daysOfService={daysOfService}
-      />
+      <div className="confirmation">
+        <form className="confirmation" onSubmit={handleSubmit}>
+          <label htmlFor="confirmation">
+            <input
+              type="submit"
+              id="confirmation"
+              name="confirmation"
+              value="Confirm"
+            />
+          </label>
+        </form>
+      </div>
     </div>
   );
 }
