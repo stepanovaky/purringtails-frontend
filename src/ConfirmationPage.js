@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import NavBar from "./NavBar";
 import ErrorBoundary from "./ErrorBoundary";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function ConfirmationPage(props) {
+  const history = useHistory();
   useEffect(() => {
     fetchScheduledInfo();
   });
@@ -46,6 +49,8 @@ function ConfirmationPage(props) {
       <ErrorBoundary>
         <NavBar user={props.location.state.scheduledInfo.userName} />
       </ErrorBoundary>
+      {/* <Link to="/homepage">Link back to Scheduler</Link> */}
+      <Link to={history.goBack("/homepage")}></Link>
     </div>
   );
 }

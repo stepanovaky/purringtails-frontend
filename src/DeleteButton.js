@@ -6,8 +6,6 @@ function DeleteButton(props) {
     fetchDeleteSchedule(props.scheduleId);
   };
 
-  const { deleteScheduledItem } = props.handleDelete;
-
   const fetchDeleteSchedule = async (id) => {
     const authToken = sessionStorage.getItem("authToken");
     try {
@@ -19,6 +17,14 @@ function DeleteButton(props) {
           sched: id,
         },
       });
+      console.log(props.scheduled);
+      const scheduled = props.scheduled;
+
+      const newScheduleList = scheduled.filter(
+        (schedule) => schedule.scheduled_id != id
+      );
+      console.log(newScheduleList);
+      props.setScheduled(newScheduleList);
     } catch {}
   };
 

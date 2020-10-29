@@ -15,16 +15,15 @@ import {
 import differenceInDays from "date-fns/differenceInDays";
 import { useHistory } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
+import Flash from "./FlashMessage";
 
 function PickDateAndTime(props) {
   const tomorrow = addDays(new Date(), 1);
+  const [showMessage, setShowMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
 
   const history = useHistory();
-  const [startDate, setStartDate] = useState(
-    setHours(setMinutes(tomorrow, 0), 10)
-  );
-
-  console.log(startDate);
+  const [startDate, setStartDate] = useState(null);
 
   const [endDate, setEndDate] = useState(null);
   const [daysOfService, setDaysOfService] = useState();
@@ -59,7 +58,7 @@ function PickDateAndTime(props) {
 
   const modifiedEndDate = (date) => {
     setStartDate(date);
-    setEndDate(addDays(date, 1));
+    setEndDate(addDays(date, 2));
   };
 
   const handleSubmit = (event) => {
@@ -87,9 +86,7 @@ function PickDateAndTime(props) {
           user: `${props.userId}`,
         },
       });
-      console.log(fetchInfo);
       const scheduleInfo = await fetchInfo.json();
-      console.log(scheduleInfo);
       setScheduled(scheduleInfo);
     } catch (err) {
       console.log(err);
@@ -98,10 +95,13 @@ function PickDateAndTime(props) {
 
   const notAvailable = [];
 
+  const option =
+    startDate != null ? startDate : setHours(setMinutes(tomorrow, 0), 10);
+
   const unavailableTimeSlots = destructuredDates.map((day) => {
-    if (getYear(startDate) === day[0]) {
-      if (getMonth(startDate) === day[1]) {
-        if (getDate(startDate) === day[2]) {
+    if (getYear(option) === day[0]) {
+      if (getMonth(option) === day[1]) {
+        if (getDate(option) === day[2]) {
           notAvailable.push(excludeTime(day[4], day[3]));
         }
       }
@@ -115,7 +115,7 @@ function PickDateAndTime(props) {
           <DatePicker
             minDate={tomorrow}
             maxDate={addDays(new Date(), 100)}
-            selected={startDate}
+            selected={tomorrow}
             onChange={(date) => setStartDate(date)}
             showTimeSelect
             excludeTimes={notAvailable}
@@ -123,7 +123,7 @@ function PickDateAndTime(props) {
             timeFormat="h:mm"
             timeIntervals={30}
             timeCaption="Time"
-            dateFormat="MMMM d, yyyy h:mm aa"
+            dateFormat="MMMM d, yyyy "
           />
         </ErrorBoundary>
       );
@@ -134,7 +134,7 @@ function PickDateAndTime(props) {
             <DatePicker
               minDate={tomorrow}
               maxDate={addDays(new Date(), 100)}
-              selected={startDate}
+              selected={tomorrow}
               onChange={(date) => modifiedEndDate(date)}
               selectsStart
               showTimeSelect
@@ -144,7 +144,7 @@ function PickDateAndTime(props) {
               timeCaption="Time"
               startDate={startDate}
               endDate={endDate}
-              dateFormat="MMMM d, yyyy h:mm aa"
+              dateFormat="MMMM d, yyyy "
             />
           </ErrorBoundary>
           <br />
@@ -161,7 +161,7 @@ function PickDateAndTime(props) {
               timeCaption="Time"
               startDate={startDate}
               endDate={endDate}
-              dateFormat="MMMM d, yyyy h:mm aa"
+              dateFormat="MMMM d, yyyy "
             />
           </ErrorBoundary>
         </div>
@@ -199,6 +199,13 @@ function PickDateAndTime(props) {
           : null}
         {daysOfService >= 2 ? `days` : null}{" "}
       </p>
+      <ErrorBoundary>
+        {showMessage && (
+          <div>
+            <Flash message={errorMessage} />
+          </div>
+        )}
+      </ErrorBoundary>
       <div className="confirmation">
         <form className="confirmation" onSubmit={handleSubmit}>
           <label htmlFor="confirmation">

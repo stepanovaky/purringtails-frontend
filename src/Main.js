@@ -8,8 +8,6 @@ function Main(props) {
   const userGivenName = props.location.state.fetchResponse.name;
   const userId = props.location.state.fetchResponse.id;
 
-  console.log(props);
-
   return (
     <div className="App">
       <ErrorBoundary>

@@ -35,8 +35,9 @@ function ScheduledServices(props) {
           </p>
           <ErrorBoundary>
             <DeleteButton
-              handleDelete={() => handleDelete(schedule.scheduledId)}
+              setScheduled={setScheduled}
               scheduleId={schedule.scheduled_id}
+              scheduled={scheduled}
             />
           </ErrorBoundary>
         </li>
@@ -62,23 +63,17 @@ function ScheduledServices(props) {
           user: `${props.userId}`,
         },
       });
-      console.log(fetchInfo);
       const scheduleInfo = await fetchInfo.json();
-      console.log(scheduleInfo);
       const response = fetchInfo;
       setScheduled(scheduleInfo);
       if (response.status === 200) {
-        console.log(response);
         const fetchResponse = await response.json();
       } else if (response.status === 400) {
         const error = await response.json();
-        console.log(error);
         setShowMessage(true);
         setErrorMessage(error.error);
       }
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   return (
