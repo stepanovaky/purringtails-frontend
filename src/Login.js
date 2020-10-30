@@ -13,6 +13,9 @@ function Login() {
     authenticateLoginGoogle(response);
   };
 
+  const thing = sessionStorage.getItem("auth");
+  console.log(thing);
+
   const authenticateLoginGoogle = async (response) => {
     try {
       const fetchAuthResponse = await fetch("http://localhost:8000/auth", {
@@ -27,10 +30,9 @@ function Login() {
         const fetchResponse = await fetchAuthResponse.json();
         const sessionStorage = window.sessionStorage;
         sessionStorage.setItem("authToken", fetchResponse.authToken);
-        // const data = sessionStorage.getItem("authToken");
-        // console.log(data);
-        // console.log(fetchResponse);
-        history.push("/homepage", { fetchResponse });
+        sessionStorage.setItem("state", true);
+
+        history.push("/homepage", { fetchResponse, isLoggedIn: true });
       } else {
         history.push("/login");
       }
@@ -62,6 +64,7 @@ function Login() {
         const fetchResponse = await response.json();
         const sessionStorage = window.sessionStorage;
         sessionStorage.setItem("authToken", fetchResponse.authToken);
+        sessionStorage.setItem("state", true);
 
         history.push("/homepage", { fetchResponse });
       } else if (response.status === 400) {
