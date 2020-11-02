@@ -28,14 +28,17 @@ function ConfirmationPage(props) {
       endDate: infoLocation.endDate == undefined ? "" : infoLocation.endDate,
     };
     try {
-      const postInfo = await fetch("http://localhost:8000/api/schedule", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: JSON.stringify(newSchedule),
-      });
+      const postInfo = await fetch(
+        "https://purringtails-backend.herokuapp.com/api/schedule",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+          body: JSON.stringify(newSchedule),
+        }
+      );
       console.log(await postInfo);
       if (postInfo.status === 200) {
         // history.push("/homepage");

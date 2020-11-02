@@ -17,7 +17,7 @@ function Login() {
   const authenticateLoginGoogle = async (response) => {
     try {
       const fetchAuthResponse = await fetch(
-        "http://localhost:8000/api/user/google/login",
+        "https://purringtails-backend.herokuapp.com/api/user/google/login",
         {
           method: "GET",
           headers: {
@@ -49,7 +49,7 @@ function Login() {
     const authToken = window.btoa(`${loginEmail}:${loginPassword}`);
     try {
       const fetchUser = await fetch(
-        "http://localhost:8000/api/user/email/login",
+        "https://purringtails-backend.herokuapp.com/api/user/email/login",
         {
           method: "POST",
           headers: {

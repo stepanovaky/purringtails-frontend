@@ -66,14 +66,17 @@ function ScheduledServices(props) {
     const authToken = sessionStorage.getItem("authToken");
 
     try {
-      const fetchInfo = await fetch("http://localhost:8000/api/schedule", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-          user: `${props.userId}`,
-        },
-      });
+      const fetchInfo = await fetch(
+        "https://purringtails-backend.herokuapp.com/api/schedule",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+            user: `${props.userId}`,
+          },
+        }
+      );
       const scheduleInfo = await fetchInfo.json();
       const response = fetchInfo;
       setScheduled(scheduleInfo);

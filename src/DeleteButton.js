@@ -9,14 +9,17 @@ function DeleteButton(props) {
   const fetchDeleteSchedule = async (id) => {
     const authToken = sessionStorage.getItem("authToken");
     try {
-      const fetchRequest = await fetch("http://localhost:8000/api/schedule", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-          sched: id,
-        },
-      });
+      const fetchRequest = await fetch(
+        "https://purringtails-backend.herokuapp.com/api/schedule",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+            sched: id,
+          },
+        }
+      );
       console.log(props.scheduled);
       const scheduled = props.scheduled;
 
