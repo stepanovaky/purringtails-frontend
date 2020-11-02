@@ -23,13 +23,16 @@ function Registration() {
       setErrorMessage("Passwords do not match");
     } else {
       try {
-        const fetchUser = await fetch("http://localhost:8000/api/user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newUser),
-        });
+        const fetchUser = await fetch(
+          "https://purringtails-backend.herokuapp.com/api/user",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newUser),
+          }
+        );
         const response = await fetchUser;
 
         if (response.status === 201) {
