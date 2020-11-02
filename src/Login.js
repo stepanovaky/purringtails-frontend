@@ -10,7 +10,6 @@ function Login() {
   const [showMessage, setShowMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
   const redirectOnLogin = (response) => {
-    console.log(response);
     authenticateLoginGoogle(response);
   };
 
