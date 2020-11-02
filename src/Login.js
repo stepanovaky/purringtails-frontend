@@ -6,6 +6,9 @@ import ErrorBoundary from "./ErrorBoundary";
 import Flash from "./FlashMessage";
 
 function Login() {
+  const everlovingfuck = () => {
+    console.log("go fuck yourself");
+  };
   const history = useHistory();
   const [showMessage, setShowMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
@@ -18,7 +21,7 @@ function Login() {
   const authenticateLoginGoogle = async (response) => {
     try {
       const fetchAuthResponse = await fetch(
-        // "https://purringtails-backend.herokuapp.com/api/user/google/login",
+        "https://purringtails-backend.herokuapp.com/api/user/google/login",
         {
           method: "GET",
           headers: {
