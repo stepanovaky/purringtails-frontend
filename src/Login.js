@@ -12,6 +12,8 @@ function Login() {
   const redirectOnLogin = (response) => {
     authenticateLoginGoogle(response);
   };
+  // https://purringtails-backend.herokuapp.com/
+  // .route('/api/user/google/login')
 
   const authenticateLoginGoogle = async (response) => {
     try {
