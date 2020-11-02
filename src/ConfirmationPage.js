@@ -69,6 +69,7 @@ function ConfirmationPage(props) {
       </ErrorBoundary>
       <h3>{errorMessage}</h3>
       <Link to="/login">Link back to Scheduler</Link>
+      <input type="button" value="Go Back" />
       {/* <Link to={history.goBack("/homepage")}></Link> */}
       {/* <Link to="/homepage">Back To Schedule</Link> */}
     </div>

@@ -12,7 +12,7 @@ function Login() {
   const redirectOnLogin = (response) => {
     authenticateLoginGoogle(response);
   };
-  // https://purringtails-backend.herokuapp.com/
+  // https://purringtails-backend.herokuapp.com/why the effing hell is this not working
   // .route('/api/user/google/login')
 
   const authenticateLoginGoogle = async (response) => {
