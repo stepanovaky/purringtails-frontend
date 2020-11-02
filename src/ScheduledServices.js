@@ -21,11 +21,13 @@ function ScheduledServices(props) {
   };
 
   const mapScheduled = scheduled.map((schedule) => {
+    console.log(schedule);
     if (new Date(schedule.scheduled_date).getTime() > new Date().getTime()) {
       return (
         <li key={`${schedule.scheduled_id}`}>
           <p>{schedule.scheduled_type}</p>
           <p>
+            {schedule.scheduled_end_date !== "" ? <span>From</span> : null}{" "}
             {schedule.scheduled_date == undefined
               ? null
               : format(
@@ -33,6 +35,15 @@ function ScheduledServices(props) {
                   "MMMM d, yyyy h:mm aa"
                 )}
           </p>
+          {schedule.scheduled_end_date !== "" ? (
+            <p>
+              until{" "}
+              {format(
+                new Date(schedule.scheduled_end_date),
+                "MMMM d, yyyy h:mm aa"
+              )}
+            </p>
+          ) : null}
           <ErrorBoundary>
             <DeleteButton
               setScheduled={setScheduled}

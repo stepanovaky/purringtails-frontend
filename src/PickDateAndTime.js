@@ -29,6 +29,18 @@ function PickDateAndTime(props) {
   const [daysOfService, setDaysOfService] = useState();
   const [scheduled, setScheduled] = useState([]);
 
+  const handleNotAvailableTimeSlot = (error) => {
+    setErrorMessage(error);
+  };
+
+  const destructuredEndDates = scheduled.map((schedule) => [
+    getYear(new Date(schedule.scheduled_end_date)),
+    getMonth(new Date(schedule.scheduled_end_date)),
+    getDate(new Date(schedule.scheduled_end_date)),
+    getHours(new Date(schedule.scheduled_end_date)),
+    getMinutes(new Date(schedule.scheduled_end_date)),
+  ]);
+
   const destructuredDates = scheduled.map((schedule) => [
     getYear(new Date(schedule.scheduled_date)),
     getMonth(new Date(schedule.scheduled_date)),
@@ -36,6 +48,8 @@ function PickDateAndTime(props) {
     getHours(new Date(schedule.scheduled_date)),
     getMinutes(new Date(schedule.scheduled_date)),
   ]);
+
+  const allDestructuredDates = destructuredDates.concat(destructuredEndDates);
 
   const excludeTime = (min, hour) =>
     setHours(setMinutes(new Date(), min), hour);
@@ -71,7 +85,9 @@ function PickDateAndTime(props) {
       endDate: endDate,
       daysOfService: daysOfService,
     };
-    history.push("/confirmation", { scheduledInfo });
+    history.push("/confirmation", {
+      scheduledInfo,
+    });
   };
 
   const fetchScheduledDates = async () => {
@@ -98,7 +114,7 @@ function PickDateAndTime(props) {
   const option =
     startDate != null ? startDate : setHours(setMinutes(tomorrow, 0), 10);
 
-  const unavailableTimeSlots = destructuredDates.map((day) => {
+  const unavailableTimeSlots = allDestructuredDates.map((day) => {
     if (getYear(option) === day[0]) {
       if (getMonth(option) === day[1]) {
         if (getDate(option) === day[2]) {
@@ -115,7 +131,7 @@ function PickDateAndTime(props) {
           <DatePicker
             minDate={tomorrow}
             maxDate={addDays(new Date(), 100)}
-            selected={tomorrow}
+            selected={startDate}
             onChange={(date) => setStartDate(date)}
             showTimeSelect
             excludeTimes={notAvailable}
@@ -134,7 +150,7 @@ function PickDateAndTime(props) {
             <DatePicker
               minDate={tomorrow}
               maxDate={addDays(new Date(), 100)}
-              selected={tomorrow}
+              selected={startDate}
               onChange={(date) => modifiedEndDate(date)}
               selectsStart
               showTimeSelect

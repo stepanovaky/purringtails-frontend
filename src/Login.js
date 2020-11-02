@@ -10,22 +10,23 @@ function Login() {
   const [showMessage, setShowMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
   const redirectOnLogin = (response) => {
+    console.log(response);
     authenticateLoginGoogle(response);
   };
 
-  const thing = sessionStorage.getItem("auth");
-  console.log(thing);
-
   const authenticateLoginGoogle = async (response) => {
     try {
-      const fetchAuthResponse = await fetch("http://localhost:8000/auth", {
-        method: "GET",
-        headers: {
-          Authorization: `${response.tokenId}`,
-          "Content-Type": "application/json",
-        },
-      });
-
+      const fetchAuthResponse = await fetch(
+        "http://localhost:8000/api/user/google/login",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${response.tokenId}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(fetchAuthResponse);
       if (fetchAuthResponse.status === 200) {
         const fetchResponse = await fetchAuthResponse.json();
         const sessionStorage = window.sessionStorage;

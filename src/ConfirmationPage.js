@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import ErrorBoundary from "./ErrorBoundary";
 import { Link } from "react-router-dom";
@@ -9,6 +9,13 @@ function ConfirmationPage(props) {
   useEffect(() => {
     fetchScheduledInfo();
   });
+
+  const [showMessage, setShowMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
+
+  const goBack = () => {
+    history.push("/login");
+  };
 
   const infoLocation = props.location.state.scheduledInfo;
 
@@ -30,6 +37,14 @@ function ConfirmationPage(props) {
         body: JSON.stringify(newSchedule),
       });
       console.log(await postInfo);
+      if (postInfo.status === 200) {
+        // history.push("/homepage");
+      } else if (postInfo.status === 400) {
+        const error = await postInfo.json();
+        console.log(error);
+        setShowMessage(true);
+        setErrorMessage(error.error);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -49,8 +64,10 @@ function ConfirmationPage(props) {
       <ErrorBoundary>
         <NavBar user={props.location.state.scheduledInfo.userName} />
       </ErrorBoundary>
-      {/* <Link to="/homepage">Link back to Scheduler</Link> */}
-      <Link to={history.goBack("/homepage")}></Link>
+      <h3>{errorMessage}</h3>
+      <Link to="/login">Link back to Scheduler</Link>
+      {/* <Link to={history.goBack("/homepage")}></Link> */}
+      {/* <Link to="/homepage">Back To Schedule</Link> */}
     </div>
   );
 }
