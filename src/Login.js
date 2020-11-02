@@ -18,7 +18,7 @@ function Login() {
   const authenticateLoginGoogle = async (response) => {
     try {
       const fetchAuthResponse = await fetch(
-        "http://purringtails-backend.herokuapp.com/api/user/google/login",
+        "https://purringtails-backend.herokuapp.com/api/user/google/login",
         {
           method: "GET",
           headers: {
