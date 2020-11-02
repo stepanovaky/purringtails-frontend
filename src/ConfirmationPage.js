@@ -14,7 +14,7 @@ function ConfirmationPage(props) {
   const [errorMessage, setErrorMessage] = useState();
 
   const goBack = () => {
-    history.push("/login");
+    history.goBack("/homepage");
   };
 
   const infoLocation = props.location.state.scheduledInfo;
@@ -68,8 +68,8 @@ function ConfirmationPage(props) {
         <NavBar user={props.location.state.scheduledInfo.userName} />
       </ErrorBoundary>
       <h3>{errorMessage}</h3>
-      <Link to="/login">Link back to Scheduler</Link>
-      <input type="button" value="Go Back" />
+      {/* <Link to="/login">Link back to Scheduler</Link> */}
+      <input type="button" value="Go Back" onClick={goBack} />
       {/* <Link to={history.goBack("/homepage")}></Link> */}
       {/* <Link to="/homepage">Back To Schedule</Link> */}
     </div>
