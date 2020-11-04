@@ -51,7 +51,7 @@ function Registration() {
   };
   return (
     <div className="registration">
-      <p className="top">
+      <p className="animate__fadeInLeft">
         {" "}
         Welcome to PurringTails! Register to login and schedule one of the pet
         sitting services we provide for your pet!
