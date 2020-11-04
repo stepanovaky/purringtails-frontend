@@ -1,0 +1,30 @@
+.registration {
+    display: grid;
+    grid-template: "left top right" "left middle right" "left bottom right";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+
+form.registration {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    grid-area: middle;
+}
+
+.registration p {
+    grid-area: top;
+    grid-column-end: top;
+    padding: 40px 0px 0px 0px;
+}
+
+.registration a {
+    grid-area: bottom;
+}
+
+.registration input {
+    width: 225px;
+    line-height: 20px;
+}

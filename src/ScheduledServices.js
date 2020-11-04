@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import DeleteButton from "./DeleteButton";
 import ErrorBoundary from "./ErrorBoundary";
+import "./ScheduledServices.css";
 
 function ScheduledServices(props) {
+  // console.log(props);
   //fetch dates specific to user, check if the time is after/before the current time, if after display
   //if before, hide
   //if nothing 'nothing scheduled so far'
@@ -13,6 +15,7 @@ function ScheduledServices(props) {
   const [scheduled, setScheduled] = useState([]);
   const [showMessage, setShowMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
+  // console.log(scheduled);
 
   const handleDelete = (id) => {
     console.log(id);
@@ -21,11 +24,13 @@ function ScheduledServices(props) {
   };
 
   const mapScheduled = scheduled.map((schedule) => {
-    console.log(schedule);
+    // console.log(schedule);
     if (new Date(schedule.scheduled_date).getTime() > new Date().getTime()) {
       return (
         <li key={`${schedule.scheduled_id}`}>
-          <p>{schedule.scheduled_type}</p>
+          <p>
+            <span className="scheduled-item">{schedule.scheduled_type}</span>
+          </p>
           <p>
             {schedule.scheduled_end_date !== "" ? <span>From</span> : null}{" "}
             {schedule.scheduled_date == undefined
@@ -92,8 +97,9 @@ function ScheduledServices(props) {
 
   return (
     <div className="scheduled">
-      <p>{scheduled == null ? "Nothing scheduled so far!" : null}</p>
-      <ul>{mapScheduled}</ul>
+      <h3>Scheduled Services</h3>
+      <p>{mapScheduled.length == 0 ? "No future services scheduled" : null}</p>
+      <ul className="scheduled-list">{mapScheduled}</ul>
     </div>
   );
 }

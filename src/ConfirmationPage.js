@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import ErrorBoundary from "./ErrorBoundary";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import "./ConfirmationPage.css";
 
 function ConfirmationPage(props) {
   const history = useHistory();
@@ -10,8 +10,8 @@ function ConfirmationPage(props) {
     fetchScheduledInfo();
   });
 
-  const [showMessage, setShowMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
+  const [successMessage, setSuccessMessage] = useState();
 
   const goBack = () => {
     history.goBack("/homepage");
@@ -41,11 +41,11 @@ function ConfirmationPage(props) {
       );
       console.log(await postInfo);
       if (postInfo.status === 200) {
-        // history.push("/homepage");
+        console.log(postInfo);
+        setSuccessMessage(`You've successfully scheduled your service!`);
       } else if (postInfo.status === 400) {
         const error = await postInfo.json();
         console.log(error);
-        setShowMessage(true);
         setErrorMessage(error.error);
       }
     } catch (err) {
@@ -53,25 +53,16 @@ function ConfirmationPage(props) {
     }
   };
 
-  console.log(props);
-  console.log(props.location.state.scheduledInfo.userId);
-  console.log(props.location.state.scheduledInfo.service);
-  console.log(props.location.state.scheduledInfo.startDate);
-  console.log(props.location.state.scheduledInfo.endDate);
-  console.log(props.location.state.scheduledInfo.daysOfService);
-  // send a fetch response to server to log all of that into the server
-  //send a confirmation email (optional at the moment)
-
   return (
-    <div className="confirmation">
+    <div className="history">
       <ErrorBoundary>
         <NavBar user={props.location.state.scheduledInfo.userName} />
       </ErrorBoundary>
-      <h3>{errorMessage}</h3>
-      {/* <Link to="/login">Link back to Scheduler</Link> */}
+      <h3 className="success">{successMessage}</h3>
+      <h3 className="error">{errorMessage}</h3>
+      <p>Go back to schedule another service or look at scheduled services</p>
+
       <input type="button" value="Go Back" onClick={goBack} />
-      {/* <Link to={history.goBack("/homepage")}></Link> */}
-      {/* <Link to="/homepage">Back To Schedule</Link> */}
     </div>
   );
 }

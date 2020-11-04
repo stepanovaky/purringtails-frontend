@@ -1,0 +1,33 @@
+.login {
+    display: grid;
+    margin: auto;
+    grid-template: "left top right" "left middle right" "left bottom right";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+
+}
+
+.email-login {
+    grid-area: middle;
+}
+
+.login p {
+    grid-area:top;
+    grid-column-end: top;
+    padding: 40px 0px 0px 0px;
+}
+
+.login a {
+    grid-area: bottom;
+
+
+}
+.login label {
+    line-height: 20px;
+}
+.login input {
+    width: 225px;
+    padding: 5px;
+    line-height: 20px;
+}
+

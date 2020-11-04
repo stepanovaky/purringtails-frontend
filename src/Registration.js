@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Flash from "./FlashMessage";
 import { useHistory } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
+import "./Registration.css";
 
 function Registration() {
   const history = useHistory();
@@ -50,19 +51,27 @@ function Registration() {
   };
   return (
     <div className="registration">
+      <p className="top">
+        {" "}
+        Welcome to PurringTails! Register to login and schedule one of the pet
+        sitting services we provide for your pet!
+      </p>
       <form className="registration" onSubmit={handleSubmitRegistration}>
         <label htmlFor="user_name">
           {" "}
           Name:
+          <br />
           <input type="text" name="user_name" id="user_name" required />
         </label>
         <label htmlFor="user_email">
           {" "}
           Email:
+          <br />
           <input type="email" name="user_email" id="user_email" required />
         </label>
         <label htmlFor="user_password">
           Password:
+          <br />
           <input
             type="password"
             name="user_password"
@@ -74,6 +83,7 @@ function Registration() {
         </label>
         <label htmlFor="user_password_confirmation">
           Confirm Password:
+          <br />
           <input
             type="password"
             name="user_password_confirmatin"

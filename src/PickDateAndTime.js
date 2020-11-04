@@ -16,6 +16,7 @@ import differenceInDays from "date-fns/differenceInDays";
 import { useHistory } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
 import Flash from "./FlashMessage";
+import "./PickDateAndTime.css";
 
 function PickDateAndTime(props) {
   const tomorrow = addDays(new Date(), 1);
@@ -130,21 +131,23 @@ function PickDateAndTime(props) {
   const serviceAppropriateCalendar = () => {
     if (props.service === "Walk" || props.service === "Drop In") {
       return (
-        <ErrorBoundary>
-          <DatePicker
-            minDate={tomorrow}
-            maxDate={addDays(new Date(), 100)}
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            showTimeSelect
-            excludeTimes={notAvailable}
-            placeholderText="Start"
-            timeFormat="h:mm"
-            timeIntervals={30}
-            timeCaption="Time"
-            dateFormat="MMMM d, yyyy "
-          />
-        </ErrorBoundary>
+        <div className="date-range">
+          <ErrorBoundary>
+            <DatePicker
+              minDate={tomorrow}
+              maxDate={addDays(new Date(), 100)}
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              showTimeSelect
+              excludeTimes={notAvailable}
+              placeholderText="Start"
+              timeFormat="h:mm"
+              timeIntervals={30}
+              timeCaption="Time"
+              dateFormat="MMMM d, yyyy "
+            />
+          </ErrorBoundary>
+        </div>
       );
     } else if (props.service === "Boarding" || props.service === "Sitting") {
       return (
@@ -190,7 +193,7 @@ function PickDateAndTime(props) {
 
   return (
     <div className="date-and-time">
-      <h2>Pick Date and Time</h2>
+      <h3>Pick Date and Time</h3>
       {serviceAppropriateCalendar()}
       <p>
         {startDate !== null

@@ -1,55 +1,19 @@
 import React, { useState } from "react";
-import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
 import Flash from "./FlashMessage";
+import "./Login.css";
 
 function Login() {
-  const everlovingfuck = () => {
-    console.log("go fuck yourself");
-  };
   const history = useHistory();
   const [showMessage, setShowMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
-  const redirectOnLogin = (response) => {
-    authenticateLoginGoogle(response);
-  };
-  // https://purringtails-backend.herokuapp.com/why the effing hell is this not working
-  // .route('/api/user/google/login')
-
-  const authenticateLoginGoogle = async (response) => {
-    try {
-      const fetchAuthResponse = await fetch(
-        "https://purringtails-backend.herokuapp.com/api/user/google/login",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${response.tokenId}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log(fetchAuthResponse);
-      if (fetchAuthResponse.status === 200) {
-        const fetchResponse = await fetchAuthResponse.json();
-        const sessionStorage = window.sessionStorage;
-        sessionStorage.setItem("authToken", fetchResponse.authToken);
-        sessionStorage.setItem("state", true);
-
-        history.push("/homepage", { fetchResponse, isLoggedIn: true });
-      } else {
-        history.push("/login");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const handleEmailSubmit = async (event) => {
     event.preventDefault();
-    const loginEmail = event.target["login_email"].value;
-    const loginPassword = event.target["login_password"].value;
+    const loginEmail = event.target["login-email"].value;
+    const loginPassword = event.target["login-password"].value;
     const authToken = window.btoa(`${loginEmail}:${loginPassword}`);
     try {
       const fetchUser = await fetch(
@@ -65,7 +29,6 @@ function Login() {
       const response = fetchUser;
 
       if (response.status === 200) {
-        console.log(response);
         const fetchResponse = await response.json();
         const sessionStorage = window.sessionStorage;
         sessionStorage.setItem("authToken", fetchResponse.authToken);
@@ -74,56 +37,43 @@ function Login() {
         history.push("/homepage", { fetchResponse });
       } else if (response.status === 400) {
         const error = await response.json();
-        console.log(error);
         setShowMessage(true);
         setErrorMessage(error.error);
       }
     } catch (error) {
       console.log(error);
     }
-    //   //send authtoken to server, turn that into jwt, return jwt to client,
-    //   //then make sure all other requests have jwt attached
   };
 
   return (
-    <div className="google_login">
+    <div className="login">
       <p>
         Welcome to PurringTails! Login to schedule one of the pet sitting
         services we provide for your pet!
       </p>
-      <ErrorBoundary>
-        <GoogleLogin
-          clientId="1031900326041-m3tpi4kjudu1f5uqj3jjp0pufpqs0ah8.apps.googleusercontent.com"
-          onSuccess={redirectOnLogin}
-          onFailure={(error) => console.log(error)}
-          redirectUri="http://localhost:3000/homepage"
-          isSignedIn={true}
-        />
-      </ErrorBoundary>
-
-      <form className="email_login" onSubmit={handleEmailSubmit}>
+      <form className="email-login" onSubmit={handleEmailSubmit}>
         <h2>Email Sign In</h2>
-        <label htmlFor="login_email">
+        <label htmlFor="login-email">
           {" "}
-          Email:
-          <input type="email" required name="login_email" id="login_email" />
+          Email: <br />
+          <input type="email" required name="login-email" id="login-email" />
         </label>
-        <label htmlFor="login_password">
+        <label htmlFor="login-password">
           {" "}
-          Password:
+          <br /> Password: <br />
           <input
             type="password"
             required
-            name="login_passwrd"
-            id="login_password"
+            name="login-passwrd"
+            id="login-password"
           />
         </label>
-        <label htmlFor="submit_label_login">
+        <label htmlFor="submit-label-login">
           <input
             type="submit"
             value="submit"
-            name="email_submit"
-            id="email_submit"
+            name="email-submit"
+            id="email-submit"
           />
           <ErrorBoundary>
             {showMessage && (

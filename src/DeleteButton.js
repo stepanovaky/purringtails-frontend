@@ -1,4 +1,5 @@
 import React from "react";
+import "./DeleteButton.css";
 
 function DeleteButton(props) {
   const handleSubmit = (event) => {
@@ -20,13 +21,11 @@ function DeleteButton(props) {
           },
         }
       );
-      console.log(props.scheduled);
       const scheduled = props.scheduled;
 
       const newScheduleList = scheduled.filter(
         (schedule) => schedule.scheduled_id != id
       );
-      console.log(newScheduleList);
       props.setScheduled(newScheduleList);
     } catch {}
   };
@@ -39,7 +38,8 @@ function DeleteButton(props) {
             type="submit"
             id={props.scheduleId}
             name="delete"
-            value="Delete"
+            value="Cancel"
+            className="delete"
           />
         </label>
       </form>

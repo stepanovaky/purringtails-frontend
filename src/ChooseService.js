@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PickDateAndTime from "./PickDateAndTime";
 import ErrorBoundary from "./ErrorBoundary";
+import "./ChooseService.css";
 
 function ChooseService(props) {
   const [selectedOption, setSelectedOption] = useState("Walk");
@@ -11,7 +12,7 @@ function ChooseService(props) {
 
   return (
     <div className="choose-service">
-      <h2>What Service are you interested in?</h2>
+      <h3>Pick Service</h3>
       <form className="choose-service-form">
         <div className="radio">
           <label>

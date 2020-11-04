@@ -1,0 +1,28 @@
+.confirmation input {
+	box-shadow: 0px 10px 14px -7px #276873;
+	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+	background-color:#599bb3;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:20px;
+	font-weight:bold;
+	padding:5px 20px;
+	text-decoration:none;
+    text-shadow:0px 1px 0px #3d768a;
+    margin-left: 20px;
+}
+.confirmation input:hover {
+	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+	background-color:#408c99;
+}
+.confirmation input:active {
+	position:relative;
+    top:1px;
+}
+
+.date-range {
+    padding: 0px 20px 0px 20px;
+}
