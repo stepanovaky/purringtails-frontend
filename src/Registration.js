@@ -12,7 +12,7 @@ function Registration() {
   const handleSubmitRegistration = async (event) => {
     event.preventDefault();
     const userName = event.target["user_name"].value;
-    const userEmail = event.target["user_email"].value;
+    const userEmail = event.target["user_email"].toLowerCase().value;
     const userPassword = event.target["user_password"].value;
     const registerUserName = window.btoa(`${userName}`);
     const authToken = window.btoa(`${userEmail}:${userPassword}`);
@@ -51,7 +51,7 @@ function Registration() {
   };
   return (
     <div className="registration">
-      <p className="animate__fadeInLeft">
+      <p className="scale-up-center">
         {" "}
         Welcome to PurringTails! Register to login and schedule one of the pet
         sitting services we provide for your pet!

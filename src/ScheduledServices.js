@@ -28,7 +28,7 @@ function ScheduledServices(props) {
     if (new Date(schedule.scheduled_date).getTime() > new Date().getTime()) {
       return (
         <li key={`${schedule.scheduled_id}`}>
-          <p>
+          <p className="scale-up-center">
             <span className="scheduled-item">{schedule.scheduled_type}</span>
           </p>
           <p>

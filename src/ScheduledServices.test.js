@@ -1,7 +1,7 @@
 import React from "react";
-import PickDateAndTime from "./PickDateAndTime";
+import ScheduledServices from "./ScheduledServices";
 import { shallow } from "enzyme";
 
 it("renders without crashing", () => {
-  shallow(<PickDateAndTime />);
+  shallow(<ScheduledServices />);
 });

@@ -12,7 +12,7 @@ function Login() {
 
   const handleEmailSubmit = async (event) => {
     event.preventDefault();
-    const loginEmail = event.target["login-email"].value;
+    const loginEmail = event.target["login-email"].value.toLowerCase();
     const loginPassword = event.target["login-password"].value;
     const authToken = window.btoa(`${loginEmail}:${loginPassword}`);
     try {
@@ -47,7 +47,7 @@ function Login() {
 
   return (
     <div className="login">
-      <p>
+      <p className="scale-up-center">
         Welcome to PurringTails! Login to schedule one of the pet sitting
         services we provide for your pet!
       </p>
@@ -68,6 +68,7 @@ function Login() {
             id="login-password"
           />
         </label>
+        <br />
         <label htmlFor="submit-label-login">
           <input
             type="submit"

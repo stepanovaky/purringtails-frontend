@@ -1,7 +1,7 @@
 import React from "react";
-import PickDateAndTime from "./PickDateAndTime";
+import NavBar from "./NavBar";
 import { shallow } from "enzyme";
 
 it("renders without crashing", () => {
-  shallow(<PickDateAndTime />);
+  shallow(<NavBar />);
 });

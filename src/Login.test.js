@@ -1,7 +1,7 @@
 import React from "react";
-import PickDateAndTime from "./PickDateAndTime";
+import Login from "./Login";
 import { shallow } from "enzyme";
 
 it("renders without crashing", () => {
-  shallow(<PickDateAndTime />);
+  shallow(<Login />);
 });

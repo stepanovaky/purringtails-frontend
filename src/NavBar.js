@@ -21,18 +21,10 @@ function NavBar(props) {
 
   return (
     <nav>
-      <h2>
+      <h2 className="jello-horizontal">
         <span className="first-letter">Hello</span>{" "}
         <span className="first-letter">{user}</span>
       </h2>
-      {/* <ErrorBoundary>
-        <GoogleLogout
-          clientId="1031900326041-m3tpi4kjudu1f5uqj3jjp0pufpqs0ah8.apps.googleusercontent.com"
-          buttonText="Logout"
-          onLogoutSuccess={() => history.push("login")}
-          onClick={handleLogout}
-        />
-      </ErrorBoundary> */}
       <input
         className="logout"
         type="button"
