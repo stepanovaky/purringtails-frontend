@@ -26,3 +26,8 @@
 .date-range {
     padding: 0px 20px 0px 20px;
 }
+
+.date-and-time p {
+	margin: 20px;
+	font-weight: bold;
+}

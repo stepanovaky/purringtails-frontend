@@ -29,7 +29,7 @@ function ConfirmationPage(props) {
     };
     try {
       const postInfo = await fetch(
-        "https://purringtails-backend.herokuapp.com/api/schedule",
+        `${process.env.REACT_APP_API}/api/schedule`,
         {
           method: "POST",
           headers: {
@@ -39,18 +39,14 @@ function ConfirmationPage(props) {
           body: JSON.stringify(newSchedule),
         }
       );
-      console.log(await postInfo);
       if (postInfo.status === 200) {
-        console.log(postInfo);
         setSuccessMessage(`You've successfully scheduled your service!`);
       } else if (postInfo.status === 400) {
         const error = await postInfo.json();
         console.log(error);
         setErrorMessage(error.error);
       }
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   return (

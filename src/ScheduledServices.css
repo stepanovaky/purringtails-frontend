@@ -48,3 +48,61 @@ span.scheduled-item {
 	-webkit-animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
             animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
   }
+
+  .scheduled-container {
+    display: grid;
+    grid-template-areas: 'small medium' 'bottom right';
+    grid-template-columns: 0.3fr 0.5fr;
+  }
+
+
+  @media only screen and (max-width: 400px) {
+  .scheduled {
+    grid-area: small;
+  }
+
+  .choose-service, .date-and-time {
+    grid-area: bottom;
+  }
+
+   
+}
+
+
+@media only screen and (min-width: 401px) and (max-width: 800px)  { 
+
+  .choose-service, .date-and-time {
+    grid-area: medium;
+  }
+
+} 
+
+@media only screen and (min-width: 801px) {
+  .choose-service {
+    display: grid;
+    grid-template-areas: 'medium large' 'bottom right';
+    grid-template-rows: 200px;
+    grid-template-columns: 200px;
+  }
+
+  .choose-service h3 {
+    grid-area: medium;
+    align-self: start;
+  }
+  .choose-service form {
+    grid-area: medium;
+    align-self: end;
+  }
+  .time {
+    grid-area: large;
+  }
+}
+
+
+
+
+
+
+
+
+

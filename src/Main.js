@@ -13,8 +13,7 @@ function Main(props) {
     <div className="App">
       <ErrorBoundary>
         <NavBar user={userGivenName} />
-        <ScheduledServices userId={userId} />
-        <ChooseService userName={userGivenName} userId={userId} />
+        <ScheduledServices userId={userId} userName={userGivenName} />
       </ErrorBoundary>
     </div>
   );

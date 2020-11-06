@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
 import Flash from "./FlashMessage";
 import "./Login.css";
+import Picture from "./images/Purring-Tails-Banner.png";
 
 function Login() {
   const history = useHistory();
@@ -17,7 +18,7 @@ function Login() {
     const authToken = window.btoa(`${loginEmail}:${loginPassword}`);
     try {
       const fetchUser = await fetch(
-        "https://purringtails-backend.herokuapp.com/api/user/email/login",
+        `${process.env.REACT_APP_API}/api/user/email/login`,
         {
           method: "POST",
           headers: {
@@ -47,6 +48,7 @@ function Login() {
 
   return (
     <div className="login">
+      <img src={Picture} alt="Purring Tails banner" />
       <p className="scale-up-center">
         Welcome to PurringTails! Login to schedule one of the pet sitting
         services we provide for your pet!

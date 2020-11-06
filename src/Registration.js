@@ -4,6 +4,7 @@ import Flash from "./FlashMessage";
 import { useHistory } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
 import "./Registration.css";
+import Picture from "./images/Purring-Tails-Banner.png";
 
 function Registration() {
   const history = useHistory();
@@ -12,7 +13,7 @@ function Registration() {
   const handleSubmitRegistration = async (event) => {
     event.preventDefault();
     const userName = event.target["user_name"].value;
-    const userEmail = event.target["user_email"].toLowerCase().value;
+    const userEmail = event.target["user_email"].value.toLowerCase();
     const userPassword = event.target["user_password"].value;
     const registerUserName = window.btoa(`${userName}`);
     const authToken = window.btoa(`${userEmail}:${userPassword}`);
@@ -24,16 +25,13 @@ function Registration() {
       setErrorMessage("Passwords do not match");
     } else {
       try {
-        const fetchUser = await fetch(
-          "https://purringtails-backend.herokuapp.com/api/user",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newUser),
-          }
-        );
+        const fetchUser = await fetch(`${process.env.REACT_APP_API}/api/user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newUser),
+        });
         const response = await fetchUser;
 
         if (response.status === 201) {
@@ -51,6 +49,7 @@ function Registration() {
   };
   return (
     <div className="registration">
+      <img src={Picture} alt="Purring Tails banner" />
       <p className="scale-up-center">
         {" "}
         Welcome to PurringTails! Register to login and schedule one of the pet

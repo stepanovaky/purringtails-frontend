@@ -7,16 +7,16 @@ Schedule a service for your pet!
 Use the 'Register' link to create an account, then click on the 'Login' link to login. 
 
 A test account has been made for you, simply type in:
-email: test@gmail.com
-password: Testing123
+- email: test@gmail.com
+- password: Testing123
 
 **An image of the registration page:**
 
-![Image of Registration](images\registration.png)
+![Image of Registration](registration.png)
 
 **An image of the login page:**
 
-![Image of Login](images\signin.png)
+![Image of Login](signin.png)
 
 ### Once logged in you can:
 - logout
@@ -27,7 +27,7 @@ password: Testing123
 
 **An image of the Scheduling Page:**
 
-![Image of scheduling](images\schedule.png)
+![Image of scheduling](schedule.png)
 
 
 ### Once you've submitted a service, date and time:
@@ -36,11 +36,11 @@ or that you have successfully scheduled your service, and can either go back to 
 
 **Image That a Previously Scheduled Date and Time was picked:**
 
-![Image of error](images\error.png)
+![Image of error](error.png)
 
 **Image of Confirmed Date and Time:**
 
-![Image of confirmation](images\confirmation.png)
+![Image of confirmation](confirmation.png)
 
 
 

@@ -96,7 +96,7 @@ function PickDateAndTime(props) {
 
     try {
       const fetchInfo = await fetch(
-        "https://purringtails-backend.herokuapp.com/api/schedule",
+        `${process.env.REACT_APP_API}/api/schedule`,
         {
           method: "GET",
           headers: {

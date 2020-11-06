@@ -23,7 +23,7 @@ function ChooseService(props) {
               onChange={() => handleOption("Walk")}
             />
             Walk
-            <div class="control_indicator"></div>
+            <div className="control_indicator"></div>
           </label>
           <label className="control control-radio">
             <input
@@ -33,7 +33,7 @@ function ChooseService(props) {
               onChange={() => handleOption("Boarding")}
             />
             Boarding
-            <div class="control_indicator"></div>
+            <div className="control_indicator"></div>
           </label>
           <label className="control control-radio">
             <input
@@ -43,7 +43,7 @@ function ChooseService(props) {
               onChange={() => handleOption("Drop In")}
             />
             Drop In
-            <div class="control_indicator"></div>
+            <div className="control_indicator"></div>
           </label>
           <label className="control control-radio">
             <input
@@ -53,17 +53,19 @@ function ChooseService(props) {
               onChange={() => handleOption("Sitting")}
             />
             Sitting
-            <div class="control_indicator"></div>
+            <div className="control_indicator"></div>
           </label>
         </div>
       </form>
-      <ErrorBoundary>
-        <PickDateAndTime
-          userName={props.userName}
-          userId={props.userId}
-          service={selectedOption}
-        />
-      </ErrorBoundary>
+      <div className="time">
+        <ErrorBoundary>
+          <PickDateAndTime
+            userName={props.userName}
+            userId={props.userId}
+            service={selectedOption}
+          />
+        </ErrorBoundary>
+      </div>
     </div>
   );
 }

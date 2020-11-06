@@ -1,8 +1,8 @@
 .registration {
     display: grid;
-    grid-template: "left top right" "left middle right" "left bottom right";
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template: "header header header" "left top right" "left middle right" "left bottom right";
+    grid-template-columns: 2.5fr 1fr 2.5fr;
+    grid-template-rows: 1fr 0.5fr 2fr 1fr;
 }
 
 
@@ -26,9 +26,19 @@ form.registration {
 
 .registration input {
     width: 225px;
+    padding: 5px;
      line-height: 20px;
 }
+
+
 
 input[type="email"] {
     margin-bottom: 20px;
 }
+
+img {
+    grid-area: header;
+    margin-left: auto;
+    margin-right: auto;
+    }
+  

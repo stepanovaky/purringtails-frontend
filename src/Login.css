@@ -1,9 +1,9 @@
 .login {
     display: grid;
     margin: auto;
-    grid-template: "left top right" "left middle right" "left bottom right";
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template: "header header header" "left top right" "left middle right" "left bottom right";
+    grid-template-columns: 2fr 1fr 2fr;
+    grid-template-rows: 2fr 1fr 2fr 1fr;
 
 }
 
@@ -17,6 +17,12 @@
     padding: 40px 0px 0px 0px;
     
 }
+
+img {
+  grid-area: header;
+  margin-left: auto;
+  margin-right: auto;
+  }
 
 @-webkit-keyframes scale-up-center {
     0% {

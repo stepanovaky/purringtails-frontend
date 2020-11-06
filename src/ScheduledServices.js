@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import DeleteButton from "./DeleteButton";
 import ErrorBoundary from "./ErrorBoundary";
 import "./ScheduledServices.css";
+import ChooseService from "./ChooseService";
 
 function ScheduledServices(props) {
   // console.log(props);
@@ -72,7 +73,7 @@ function ScheduledServices(props) {
 
     try {
       const fetchInfo = await fetch(
-        "https://purringtails-backend.herokuapp.com/api/schedule",
+        `${process.env.REACT_APP_API}/api/schedule`,
         {
           method: "GET",
           headers: {
@@ -96,10 +97,15 @@ function ScheduledServices(props) {
   };
 
   return (
-    <div className="scheduled">
-      <h3>Scheduled Services</h3>
-      <p>{mapScheduled.length == 0 ? "No future services scheduled" : null}</p>
-      <ul className="scheduled-list">{mapScheduled}</ul>
+    <div className="scheduled-container">
+      <div className="scheduled">
+        <h3>Scheduled Services</h3>
+        <p>
+          {mapScheduled.length == 0 ? "No future services scheduled" : null}
+        </p>
+        <ul className="scheduled-list">{mapScheduled}</ul>
+      </div>
+      <ChooseService userName={props.userName} userId={props.userId} />
     </div>
   );
 }
