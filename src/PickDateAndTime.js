@@ -96,13 +96,12 @@ function PickDateAndTime(props) {
 
     try {
       const fetchInfo = await fetch(
-        `${process.env.REACT_APP_API}/api/schedule`,
+        `${process.env.REACT_APP_API}/api/schedule/all`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${authToken}`,
-            user: `${props.userId}`,
           },
         }
       );

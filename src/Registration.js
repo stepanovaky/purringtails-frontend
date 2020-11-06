@@ -18,6 +18,7 @@ function Registration() {
     const registerUserName = window.btoa(`${userName}`);
     const authToken = window.btoa(`${userEmail}:${userPassword}`);
     const newUser = { givenName: registerUserName, authToken: authToken };
+    console.log(newUser);
     const userPasswordConfirmation =
       event.target["user_password_confirmation"].value;
     if (userPassword != userPasswordConfirmation) {

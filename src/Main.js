@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import ChooseService from "./ChooseService";
+import React from "react";
 import ErrorBoundary from "./ErrorBoundary";
 import NavBar from "./NavBar";
 import ScheduledServices from "./ScheduledServices";

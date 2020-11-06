@@ -31,6 +31,7 @@ function Login() {
 
       if (response.status === 200) {
         const fetchResponse = await response.json();
+        console.log(fetchResponse);
         const sessionStorage = window.sessionStorage;
         sessionStorage.setItem("authToken", fetchResponse.authToken);
         sessionStorage.setItem("state", true);
