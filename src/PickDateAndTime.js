@@ -30,9 +30,7 @@ function PickDateAndTime(props) {
   const [daysOfService, setDaysOfService] = useState();
   const [scheduled, setScheduled] = useState([]);
 
-  const handleNotAvailableTimeSlot = (error) => {
-    setErrorMessage(error);
-  };
+  //Takes the dates and breaks them into arrays of [year, month, day, hour, minutes]
 
   const destructuredEndDates = scheduled.map((schedule) => [
     getYear(new Date(schedule.scheduled_end_date)),
@@ -50,12 +48,15 @@ function PickDateAndTime(props) {
     getMinutes(new Date(schedule.scheduled_date)),
   ]);
 
+  //Adds destructured start dates and destructured end dates
   const allDestructuredDates = destructuredDates.concat(destructuredEndDates);
 
   const excludeTime = (min, hour) =>
     setHours(setMinutes(new Date(), min), hour);
 
   const dateRangeInDays = differenceInDays(endDate, startDate);
+
+  //Specifically only shows date range if the amount is greater than 0
   const displayingDaysOfService = (dateRange) => {
     if (dateRange <= 0) {
       setDaysOfService(1);
@@ -117,6 +118,9 @@ function PickDateAndTime(props) {
   const option =
     startDate != null ? startDate : setHours(setMinutes(tomorrow, 0), 10);
 
+  //Takes destructured dates and sifts through them so that when
+  //a specific day is chosen, it shows all of the unavailable times
+  //on that day
   const unavailableTimeSlots = allDestructuredDates.map((day) => {
     if (getYear(option) === day[0]) {
       if (getMonth(option) === day[1]) {
@@ -189,7 +193,8 @@ function PickDateAndTime(props) {
       );
     }
   };
-
+  //The following is a series of 'if' statements that determine
+  //exactly what is shown to the user
   return (
     <div className="date-and-time">
       <h3>Pick Date and Time</h3>

@@ -6,17 +6,9 @@ import "./ScheduledServices.css";
 import ChooseService from "./ChooseService";
 
 function ScheduledServices(props) {
-  // console.log(props);
-  //fetch dates specific to user, check if the time is after/before the current time, if after display
-  //if before, hide
-  //if nothing 'nothing scheduled so far'
-  //attach a deletion link to all displayed dates
-  //OPTIONAL attach reschedule link
-
   const [scheduled, setScheduled] = useState([]);
   const [showMessage, setShowMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
-  // console.log(scheduled);
 
   const handleDelete = (id) => {
     console.log(id);
@@ -25,7 +17,6 @@ function ScheduledServices(props) {
   };
 
   const mapScheduled = scheduled.map((schedule) => {
-    // console.log(schedule);
     if (new Date(schedule.scheduled_date).getTime() > new Date().getTime()) {
       return (
         <li key={`${schedule.scheduled_id}`}>

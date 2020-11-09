@@ -2,6 +2,9 @@
 
 Schedule a service for your pet!
 
+Link to live app: https://purringtails-frontend-fizfvgpo4.vercel.app/login
+Link to backend github repo: https://github.com/stepanovaky/purringtails-backend
+
 ## Overview
 
 Use the 'Register' link to create an account, then click on the 'Login' link to login. 

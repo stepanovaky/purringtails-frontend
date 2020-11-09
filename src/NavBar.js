@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import { GoogleLogout } from "react-google-login";
 import { useHistory } from "react-router-dom";
-// import ErrorBoundary from "./ErrorBoundary";
 import "./NavBar.css";
 
 function NavBar(props) {

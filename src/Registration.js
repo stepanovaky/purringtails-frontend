@@ -12,6 +12,8 @@ function Registration() {
   const [errorMessage, setErrorMessage] = useState();
   const handleSubmitRegistration = async (event) => {
     event.preventDefault();
+    //Takes the provided information and encrypts it before sending
+    //it to the server
     const userName = event.target["user_name"].value;
     const userEmail = event.target["user_email"].value.toLowerCase();
     const userPassword = event.target["user_password"].value;

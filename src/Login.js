@@ -16,6 +16,7 @@ function Login() {
     const loginEmail = event.target["login-email"].value.toLowerCase();
     const loginPassword = event.target["login-password"].value;
     const authToken = window.btoa(`${loginEmail}:${loginPassword}`);
+    console.log(authToken);
     try {
       const fetchUser = await fetch(
         `${process.env.REACT_APP_API}/api/user/email/login`,

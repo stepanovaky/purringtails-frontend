@@ -1,5 +1,7 @@
 import React from "react";
 
+//ErrorBoundary catches if a component mounts. Must be a class component
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
